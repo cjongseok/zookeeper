@@ -1,1 +1,1 @@
-zookeeper
+zookeeper 3.4.6
