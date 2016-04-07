@@ -23,7 +23,10 @@ function func_init(){
     fi
 
     # setup hostname
-    sudo hostname $desired_hostname
+#    sudo hostname $desired_hostname
+
+    # setup Zookeeper consul service name
+
 }
 
 function func_parse_args(){
