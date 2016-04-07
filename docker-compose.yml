@@ -1,0 +1,62 @@
+zk_server:
+    container_name: zk_server
+    image: zookeeper:3.4.6
+    restart: always
+    expose: 
+        - "2181"
+        - "2888"
+        - "3888"
+    ports:
+        - "2181:2181"
+        - "2888:2888"
+        - "3888:3888"
+    environment:
+        - DOCKER_BRIDGE_IP=172.17.0.1
+        - SERVICE_NAME=zk_server
+    volumes:
+        - config/zoo.cfg:/opt/zookeeper-3.4.6/conf/zoo.cfg
+    command: start
+#    command: /opt/zookeeper-3.4.6/bin/zkServer.sh start
+#    links:
+#        - zk2:zookeeper2
+#        - zk3:zookeeper3
+
+#zk2:
+#    container_name: zk2
+#    hostname: zookeeper2
+#    image: cjongseok/zookeeper:3.4.6
+#    restart: always
+#    expose: 
+#        - "2181"
+#        - "2888"
+#        - "3888"
+#    ports:
+#        - "2181:2181"
+#        - "2888:2888"
+#        - "3888:3888"
+#    environment:
+#        - DOCKER_BRIDGE_IP=172.17.0.1
+#        - SERVICE_NAME=zk_server
+#    links:
+#        - zk1:zookeeper1
+#        - zk3:zookeeper3
+
+#zk3:
+#    container_name: zk3
+#    hostname: zookeeper3
+#    image: cjongseok/zookeeper:3.4.6
+#    restart: always
+#    expose: 
+#        - "2181"
+#        - "2888"
+#        - "3888"
+#    ports:
+#        - "2181:2181"
+#        - "2888:2888"
+#        - "3888:3888"
+#    environment:
+#        - DOCKER_BRIDGE_IP=172.17.0.1
+#        - SERVICE_NAME=zk_server
+#    links:
+#        - zk2:zookeeper2
+#        - zk1:zookeeper1
