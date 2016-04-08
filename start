@@ -1,6 +1,7 @@
 #!/bin/bash
+set -u
 
-ZK_LANUCHER=${ZK_HOME}/bin/zkServer.sh
+ZK_LAUNCHER=${ZK_HOME}/bin/zkServer.sh
 
 
 function func_configure_zookeeper(){
@@ -17,7 +18,7 @@ function func_configure_zookeeper(){
 }
 
 function func_start_zookeeper(){
-    $ZK_LAUNCGHER start    
+    $ZK_LAUNCHER start    
 }
 
 
