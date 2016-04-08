@@ -1,7 +1,6 @@
 zk_server:
     container_name: zk_server
-    #image: cjongseok/zookeeper:3.4.6
-    image: zookeeper:3.4.6
+    image: cjongseok/zookeeper:3.4.6
     restart: always
     expose: 
         - "2181"
