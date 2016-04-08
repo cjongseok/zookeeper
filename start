@@ -1,0 +1,27 @@
+#!/bin/bash
+
+ZK_LANUCHER=${ZK_HOME}/bin/zkServer.sh
+
+
+function func_configure_zookeeper(){
+    local unset url
+
+    # add servers to zoo.cfg
+    #ZK_SERVERS="server1 server2 server3"
+
+    size=$(echo $ZK_SERVERS | awk '{print NF}')
+    for ((index=0; index<size; index++)); do
+        url=$(echo $ZK_SERVERS | awk '{print $'"$((index+1))"'}')
+        echo "server.$((index+1))=$url:2888:3888" >> $ZK_CONF_FILE
+    done
+}
+
+function func_start_zookeeper(){
+    $ZK_LAUNCGHER start    
+}
+
+
+func_configure_zookeeper
+func_start_zookeeper
+
+

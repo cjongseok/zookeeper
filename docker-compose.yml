@@ -1,6 +1,7 @@
 zk_server:
     container_name: zk_server
-    image: cjongseok/zookeeper:3.4.6
+    #image: cjongseok/zookeeper:3.4.6
+    image: zookeeper:3.4.6
     restart: always
     expose: 
         - "2181"
@@ -13,10 +14,11 @@ zk_server:
     environment:
         # Below env variables are automatically allocated by zk_env.sh
         - SERVICE_NAME=
+        - ZK_SERVERS=
         ##############################################################
-    volumes:
-        - config/zoo.cfg:/opt/zookeeper-3.4.6/conf/zoo.cfg
-    command: start
+        #volumes:
+        #- config/zoo.cfg:/opt/zookeeper-3.4.6/conf/zoo.cfg
+        #    command: start
 #    command: /opt/zookeeper-3.4.6/bin/zkServer.sh start
 #    links:
 #        - zk2:zookeeper2

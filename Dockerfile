@@ -2,6 +2,7 @@ FROM cjongseok/oracle-jdk:1.8.0_77
 
 ENV ZK_VERSION=3.4.6
 ENV ZK_HOME=/opt/zookeeper-${ZK_VERSION}
+ENV ZK_CONF_FILE=${ZK_HOME}/conf/zoo.cfg
 ENV JAVA_HOME=/usr/java/jdk1.8.0_77
 ENV ZOO_LOG_DIR=${ZK_HOME}/logs
 
@@ -17,7 +18,11 @@ RUN set -ex \
 # 3888: leader selection
 EXPOSE 2181 2888 3888
 
-ENTRYPOINT ["/opt/zookeeper-3.4.6/bin/zkServer.sh"]
+COPY config/zoo.cfg ${ZK_CONF_FILE}
+COPY start /opt/start
+CMD ["/opt/start"]
+
+#ENTRYPOINT ["/opt/zookeeper-3.4.6/bin/zkServer.sh"]
 #ENTRYPOINT ["/opt/zookeeper-${ZK_VERSION}/bin/zkServer.sh"]
 #ENTRYPOINT ["${ZK_HOME}/bin/zkServer.sh"]
 
