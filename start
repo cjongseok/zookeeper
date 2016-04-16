@@ -15,12 +15,16 @@ function func_configure_zookeeper(){
     size=$(echo $ZK_SERVERS | awk '{print NF}')
     for ((id=1; id<=size; id++)); do
         url=$(echo $ZK_SERVERS | sed 's/"//g' | awk '{print $'"$((id))"'}')
-        echo "server.$((id))=$url:2888:3888" >> $ZK_CONF_FILE
 
-        # find and set myid
         if [[ $url == $my_url ]]; then
             echo "set myid as $id in ${ZK_MYID_FILE}"
             echo $id > ${ZK_MYID_FILE}
+
+            # Set my server's ip as 0.0.0.0
+            echo "server.$((id))=0.0.0.0:2888:3888" >> $ZK_CONF_FILE
+        else
+            # Set other server's as their Consul service name
+            echo "server.$((id))=$url:2888:3888" >> $ZK_CONF_FILE
         fi
     done
 }
