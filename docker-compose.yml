@@ -8,7 +8,7 @@ zk_server:
         - "2888:2888"
         - "2888:2888/udp"
         - "3888:3888"
-        - "3888:3888/dup"
+        - "3888:3888/udp"
     environment:
         # Below env variables are automatically allocated by zk_env.sh
         - SERVICE_NAME=
