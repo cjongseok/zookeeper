@@ -2,14 +2,13 @@ zk_server:
     container_name: zk_server
     image: cjongseok/zookeeper:3.4.6
     restart: always
-    expose: 
-        - "2181"
-        - "2888"
-        - "3888"
     ports:
         - "2181:2181"
+        - "2181:2181/udp"
         - "2888:2888"
+        - "2888:2888/udp"
         - "3888:3888"
+        - "3888:3888/dup"
     environment:
         # Below env variables are automatically allocated by zk_env.sh
         - SERVICE_NAME=
