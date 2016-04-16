@@ -2,18 +2,26 @@
 set -u
 
 ZK_LAUNCHER=${ZK_HOME}/bin/zkServer.sh
+ZK_DATA_DIR=${ZK_HOME}/data
+ZK_MYID_FILE=${ZK_DATA_DIR}/myid
 
 
 function func_configure_zookeeper(){
     local unset url
+    local unset id
+    local my_url=$SERVICE_NAME
 
     # add servers to zoo.cfg
-    #ZK_SERVERS="server1 server2 server3"
-
     size=$(echo $ZK_SERVERS | awk '{print NF}')
-    for ((index=0; index<size; index++)); do
-        url=$(echo $ZK_SERVERS | awk '{print $'"$((index+1))"'}')
-        echo "server.$((index+1))=$url:2888:3888" >> $ZK_CONF_FILE
+    for ((id=1; id<=size; id++)); do
+        url=$(echo $ZK_SERVERS | sed 's/"//g' | awk '{print $'"$((id))"'}')
+        echo "server.$((id))=$url:2888:3888" >> $ZK_CONF_FILE
+
+        # find and set myid
+        if [[ $url == $my_url ]]; then
+            echo "set myid as $id in ${ZK_MYID_FILE}"
+            echo $id > ${ZK_MYID_FILE}
+        fi
     done
 }
 
@@ -22,6 +30,7 @@ function func_start_zookeeper(){
 }
 
 
+echo "my url is $SERVICE_NAME"
 func_configure_zookeeper
 func_start_zookeeper
 
