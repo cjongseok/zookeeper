@@ -17,12 +17,12 @@ function func_configure_zookeeper(){
     for ((id=1; id<=size; id++)); do
         url=$(echo $ZK_SERVERS | sed 's/"//g' | awk '{print $'"$((id))"'}')
 
-        if [[ $url == $my_url ]]; then
-            if [ -z "$myid" ]; then
-                myid=$id
-            fi
+        if [[ $url == $my_url ]] && [ -z "$myid" ]; then
+            myid=$id
+        fi
 
-            # Set my server's ip as 0.0.0.0
+        if [ $id -eq $myid ]; then
+           # Set my server's ip as 0.0.0.0
             echo "server.$((id))=0.0.0.0:2888:3888" >> $ZK_CONF_FILE
         else
             # Set other server's as their Consul service name
@@ -44,5 +44,3 @@ function func_start_zookeeper(){
 echo "my url is $SERVICE_NAME"
 func_configure_zookeeper
 func_start_zookeeper
-
-
