@@ -2,7 +2,8 @@
 set -u
 
 ZK_LAUNCHER=${ZK_HOME}/bin/zkServer.sh
-ZK_DATA_DIR=${ZK_HOME}/data
+#ZK_DATA_DIR=${ZK_HOME}/data
+ZK_DATA_DIR=/opt/zk_data
 ZK_MYID_FILE=${ZK_DATA_DIR}/myid
 
 
@@ -11,6 +12,11 @@ function func_configure_zookeeper(){
     local unset id
     local myid=$ZK_MYID
     local my_url=$SERVICE_NAME
+
+    # create Zookeeper data directory
+    if [ ! -d ${ZK_DATA_DIR} ]; then
+        mkdir -p ${ZK_DATA_DIR}
+    fi
 
     # add servers to zoo.cfg
     size=$(echo $ZK_SERVERS | awk '{print NF}')
