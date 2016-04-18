@@ -9,6 +9,7 @@ ZK_MYID_FILE=${ZK_DATA_DIR}/myid
 function func_configure_zookeeper(){
     local unset url
     local unset id
+    local myid=$ZK_MYID
     local my_url=$SERVICE_NAME
 
     # add servers to zoo.cfg
@@ -17,8 +18,9 @@ function func_configure_zookeeper(){
         url=$(echo $ZK_SERVERS | sed 's/"//g' | awk '{print $'"$((id))"'}')
 
         if [[ $url == $my_url ]]; then
-            echo "set myid as $id in ${ZK_MYID_FILE}"
-            echo $id > ${ZK_MYID_FILE}
+            if [ -z "$myid" ]; then
+                myid=$id
+            fi
 
             # Set my server's ip as 0.0.0.0
             echo "server.$((id))=0.0.0.0:2888:3888" >> $ZK_CONF_FILE
@@ -27,6 +29,11 @@ function func_configure_zookeeper(){
             echo "server.$((id))=$url:2888:3888" >> $ZK_CONF_FILE
         fi
     done
+
+    if [ ! -z "$myid" ]; then
+        echo "set myid as $id in ${ZK_MYID_FILE}"
+        echo $myid > ${ZK_MYID_FILE}
+    fi
 }
 
 function func_start_zookeeper(){

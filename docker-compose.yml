@@ -13,6 +13,7 @@ zk_server:
         # Below env variables are automatically allocated by zk_env.sh
         - SERVICE_NAME=
         - ZK_SERVERS=
+        - ZK_MYID=
         ##############################################################
         #volumes:
         #- config/zoo.cfg:/opt/zookeeper-3.4.6/conf/zoo.cfg
