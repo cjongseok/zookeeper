@@ -10,8 +10,7 @@ zk_server:
         - "3888:3888"
         - "3888:3888/udp"
     volumes:
-        # <ZK_DATA_VOLUME_HOST> and <ZK_DATA_VOLMUE_CONTAINER> are 
-        # automatically resolved by zk_env.sh
+        # <ZK_DATA_VOLUME_HOST> is automatically resolved by zk_env.sh
         - <ZK_DATA_VOLUME_HOST>:/opt/zk_data
     environment:
         # Below env variables are automatically allocated by zk_env.sh
