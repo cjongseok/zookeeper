@@ -31,7 +31,7 @@ function func_configure_zookeeper(){
     done
 
     if [ ! -z "$myid" ]; then
-        echo "set myid as $id in ${ZK_MYID_FILE}"
+        echo "set myid as $myid in ${ZK_MYID_FILE}"
         echo $myid > ${ZK_MYID_FILE}
     fi
 }
